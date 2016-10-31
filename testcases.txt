@@ -1,0 +1,119 @@
+./tokenizer "1342 3.14e+10 31.4-e10 0x4f 3x42 \t 100.0 100"
+Input:
+1342 3.14e+10 31.4-e10 08x4f 3x42 \t 100.0 100
+
+	Decimal: 1342
+	Float: '3.14e+10'
+	Decimal: 31
+	Invalid: '.' = [0x2e]
+	Decimal: 4
+	Invalid: '-' = [0x2d]
+	Invalid: 'e' = [0x65]
+	Decimal: 10
+	Hex: '0x4f'
+	Decimal: 3
+	Invalid: 'x' = [0x78]
+	Decimal: 42
+	Escape character: '\t' = '[0x09]'
+	Decimal: 100
+	Invalid: '.' = [0x2e]
+	Octal: 08
+	Decimal: 100
+	
+./tokenizer "\n \t \v \b \r \f \a \? "
+	Input:
+	\n \t \v \b \r \f \a \?
+
+	Escape character: '\n' = '[0x0a]'
+	Escape character: '\t' = '[0x09]'
+	Escape character: '\v' = '[0x0b]'
+	Escape character: '\b' = '[0x08]'
+	Escape character: '\r' = '[0x0d]'
+	Escape character: '\f' = '[0x0c]'
+	Escape character: '\a' = '[0x07]'
+	Escape character: '\?' = '[0x3f]'
+	
+./tokenizer "0 3.14e-10 0x44 100 923180947103710238 91,1313 9.13"
+	Input:
+	0 3.14e-10 0x44 100 923180947103710238 91,1313 9.13
+
+	Zero: '0'
+	Float: '3.14e-10'
+	Hex: '0x44'
+	Decimal: 100
+	Decimal: 923180947103710238
+	Decimal: 91
+	Invalid: ',' = [0x2c]
+	Decimal: 1313
+	Float: '9.13'
+
+./tokenizer "hello 9.31458 0x44 0x4g 0xf 3.149l world"
+Input:
+hello 9.31458 0x44 03x4g 0xf 3.149l world
+
+	Invalid: 'h' = [0x68]
+	Invalid: 'e' = [0x65]
+	Invalid: 'l' = [0x6c]
+	Invalid: 'l' = [0x6c]
+	Invalid: 'o' = [0x6f]
+	Float: '9.31458'
+	Hex: '0x44'
+	Octal: 03
+	Invalid: 'x' = [0x78]
+	Decimal: 4
+	Invalid: 'g' = [0x67]
+	Hex: '0xf'
+	Float: '3.149l'
+	Invalid: 'w' = [0x77]
+	Invalid: 'o' = [0x6f]
+	Invalid: 'r' = [0x72]
+	Invalid: 'l' = [0x6c]
+	Invalid: 'd' = [0x64]
+
+./tokenizer "123p13"
+Input:
+123p13
+
+	Decimal: 123
+	Invalid: 'p' = [0x70]
+	Decimal: 13
+	
+./tokenizer "0700 \9\r4 \r 3x00 -36 3.14 \a 1234 \t 123p123 e% x q - 3.14159e-10 0x4f 0xgg 3.14-e10 07x80"
+Input:
+0700 \9\r4 \r 3x09 -36 3.14 \a 1234 \t 123p123 e% x q - 3.14159e-10 02x4f 0xgg 3.14-e10 07x80
+
+	Octal: 0700
+	Invalid: '\' = [0x5c]
+	Decimal: 9
+	Invalid: '\' = [0x5c]
+	Invalid: 'r' = [0x72]
+	Decimal: 4
+	Escape character: '\r' = '[0x0d]'
+	Decimal: 3
+	Invalid: 'x' = [0x78]
+	Octal: 09
+	Invalid: '-' = [0x2d]
+	Decimal: 36
+	Float: '3.14'
+	Escape character: '\a' = '[0x07]'
+	Decimal: 1234
+	Escape character: '\t' = '[0x09]'
+	Decimal: 123
+	Invalid: 'p' = [0x70]
+	Decimal: 123
+	Invalid: 'e' = [0x65]
+	Invalid: '%' = [0x25]
+	Invalid: 'x' = [0x78]
+	Invalid: 'q' = [0x71]
+	Invalid: '-' = [0x2d]
+	Float: '3.14159e-10'
+	Hex: '0x4f'
+	Octal: 02
+	Invalid: 'x' = [0x78]
+	Invalid: 'g' = [0x67]
+	Invalid: 'g' = [0x67]
+	Float: '3.14-e10'
+	Octal: 07
+	Invalid: 'x' = [0x78]
+	Decimal: 80
+	
